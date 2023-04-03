@@ -1,2 +1,2 @@
 # Operating-Systems-Project
-Mock kernel development in i386 architecture.
+Mock kernel development on i386 architecture.
