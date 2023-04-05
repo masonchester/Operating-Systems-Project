@@ -1,2 +1,2 @@
 # Operating-Systems-Project
-Mock kernel development on i386 architecture.
+Memory manager development on i386 architecture on mock kernel for Operating Systems course.
