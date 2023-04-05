@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 typedef struct node
 {
   unsigned int base_address;
@@ -15,6 +16,13 @@ struct node *current = NULL;
 
 struct node *node_find(struct node *list, int search_address)
 {
+  current = list;
+  while (search_address >= current->base_address && search_address <= (current->base_address + current->limit_offeset) - 1)
+  {
+    return current;
+    current = current->next;
+  }
+  return NULL;
 }
 
 void sort_by_id(struct node *list)
