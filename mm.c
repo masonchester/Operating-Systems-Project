@@ -3,6 +3,8 @@
 
 typedef struct node
 {
+  int pid;
+  
   unsigned int base_address;
   unsigned int limit_offeset;
 
@@ -12,10 +14,11 @@ typedef struct node
 
 struct node *node_find(struct node *list, int search_address)
 {
-  struct node *current = list;
-  while (search_address >= current->base_address && search_address <= (current->base_address + current->limit_offeset) - 1)
-  {
-    return current;
+  struct node* current = list;
+  while(current != NULL){
+    if(search_address == current->pid){
+      return current;
+    }
     current = current->next;
   }
   return NULL;
