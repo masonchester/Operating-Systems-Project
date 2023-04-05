@@ -10,13 +10,9 @@ typedef struct node
   struct node *prev;
 };
 
-struct node *head = NULL;
-struct node *tail = NULL;
-struct node *current = NULL;
-
 struct node *node_find(struct node *list, int search_address)
 {
-  current = list;
+  struct node *current = list;
   while (search_address >= current->base_address && search_address <= (current->base_address + current->limit_offeset) - 1)
   {
     return current;
@@ -34,10 +30,6 @@ void sort_by_size(struct node *list)
 }
 
 void add(struct node *head, unsigned int base_address, unsigned int limit_offset)
-{
-}
-
-void add(struct node *head, struct node *new_node)
 {
 }
 
