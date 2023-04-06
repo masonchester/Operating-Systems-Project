@@ -16,15 +16,11 @@ struct node *tail = NULL;
 struct node *node_find(struct node *list, int search_address)
 {
   struct node *current = list;
-  while (current != NULL)
+  while (current != NULL && current->base_address != search_address)
   {
-    if (search_address == current->base_address)
-    {
-      return current;
-    }
     current = current->next;
   }
-  return NULL;
+  return current;
 }
 
 void sort_by_baseaddress(struct node *list)
