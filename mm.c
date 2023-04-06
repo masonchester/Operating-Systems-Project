@@ -27,11 +27,10 @@ struct node *node_find(struct node *list, int search_address)
   return NULL;
 }
 
-void sort_by_id(struct node *list)
+void sort_by_baseaddress(struct node *list)
 {
 }
-
-void sort_by_size(struct node *list)
+void sort_by_limitaddress(struct node *list)
 {
 }
 
