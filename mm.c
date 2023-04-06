@@ -10,7 +10,10 @@ typedef struct node
   struct node *prev;
 };
 
+// global variable pointing to the head
 struct node *head = NULL;
+
+// global varaible pointing to the tail
 struct node *tail = NULL;
 
 // searchs for the node which contains the current base address
