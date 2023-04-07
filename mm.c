@@ -72,6 +72,7 @@ void sort_by_limitaddress(struct node *list)
 // add a node in its sorted position
 void add(struct node **head, unsigned int base_address, unsigned int limit_offset)
 {
+  // Allocate for a new node
   struct node *new_node = (struct node *)malloc(sizeof(struct node));
   new_node->base_address = base_address;
   new_node->limit_offeset = limit_offset;
@@ -104,5 +105,34 @@ void add(struct node **head, unsigned int base_address, unsigned int limit_offse
 }
 
 void delete_by_address(struct node **head, unsigned int delete_address)
+{
+  struct node *current = *head;
+
+  while (current != NULL && current->base_address != delete_address)
+  {
+    current = current->next;
+  }
+
+  // If the node is the head delete the head
+  if (current->prev == NULL)
+  {
+    *head = current->next;
+    return;
+  }
+  // If the node is the tail then delete it
+  else if (current->next == NULL)
+  {
+    current->prev->next = NULL;
+  }
+  else // if the node is not a head or a tail then it must be in the middle of two nodes
+  {
+    current->prev->next = current->next;
+    current->next->prev = current->prev;
+  }
+  free(current); // deallocate current
+  return;
+}
+
+void resize(struct node **head, unsigned int base_address, unsigned int limit_offset)
 {
 }
