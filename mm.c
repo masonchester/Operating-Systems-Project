@@ -22,7 +22,7 @@ struct node *node_find(struct node *list, int search_address)
 }
 
 // sorts the list by the base address in increasing order
-void sort_by_baseaddress(struct node *list)
+void sort_by_base_address(struct node *list)
 {
   struct node *current = list;
   while (current != NULL)
@@ -46,7 +46,7 @@ void sort_by_baseaddress(struct node *list)
 }
 
 // sorts the list by the limit offset by increasing order
-void sort_by_limitaddress(struct node *list)
+void sort_by_limit_address(struct node *list)
 {
   struct node *current = list;
   while (current != NULL)
