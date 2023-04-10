@@ -153,6 +153,42 @@ void print_hole_list(holeList* the_list)
 }
 
 
+
+
+node* create_holes_list(node* holes_list,node* memoryList,unsigned int base_address, unsigned int limit_offset)
+{
+  
+  if(memoryList == NULL)
+  {
+    add(holes_list,base_address,limit_offset);
+    return holes_list;
+  }
+  else if(memoryList->next == NULL)
+  {
+    if(holes_list == NULL)
+    {
+      add(holes_list,memoryList->limit_offeset+1,limit_offset);
+    }
+    else
+    {
+    holes_list->base_address = memoryList->limit_offeset + 1;
+    holes_list->limit_offeset = limit_offset;
+    }
+    return holes_list;
+  }
+  else if(memoryList != NULL)
+  {
+    node* currentMemList = memoryList;
+    while(currentMemList->next != NULL)
+    {
+      add(holes_list,currentMemList->limit_offeset + 1,currentMemList->next->base_address-1);
+      currentMemList = currentMemList->next;
+    }
+  }
+  return holes_list;
+}
+
+
 int main()
 {
   //Testing the holes list.
