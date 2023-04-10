@@ -38,16 +38,18 @@ int remove_hole_from_list(holeList* the_list,unsigned int size_of_process,unsign
         //that it starts at the next avaiable memory cell
         if(current->base_address + size_of_process + 1 <= limit_offset)
         {
+          unsigned int temp = current->base_address;
           current->base_address = current->base_address + size_of_process + 1;
-          //then we return the base address which can be used as the limit index for the process. 
-          return current->base_address - 1;
+          //we return the starting position where the process should go in memory.
+          return temp;
         }
         else
         //otherwise the process still fits but there is no next spot avaiable in the memory and we do not want the hole list to say 1001 and 1000.
         {
+           unsigned int temp = current->base_address;
           current->base_address = current->base_address + size_of_process;
-          //then we return the base address which can be used as the limit index for the process. 
-          return current->base_address;
+          //we return the starting position where the process should go in memory.
+          return temp;
         }
         
       }
@@ -58,10 +60,11 @@ int remove_hole_from_list(holeList* the_list,unsigned int size_of_process,unsign
     //we need to search through these holes and see if there is a spot where the process can fit.
       if(current->base_address + size_of_process <= current->limit_offeset + 1)
       {
+         unsigned int temp = current->base_address;
         //if we find a spot we can update currents base address to reflect that space as not being open.
         current->base_address = current->base_address + size_of_process + 1;
-        //then we can return this value 
-        return current->base_address - 1;
+        //we return the starting positon where the process should go in memory.
+        return temp;
       }
       //Otherwise we continue looking. 
       *current = *current->next;
