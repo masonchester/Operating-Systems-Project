@@ -126,7 +126,6 @@ void delete_by_address(struct node **head, unsigned int delete_address)
     current->next->prev = current->prev;
   }
   free(current); // deallocate current
-  return;
 }
 
 void resize(struct node **head, unsigned int base_address, unsigned int limit_offset)
@@ -141,8 +140,13 @@ void resize(struct node **head, unsigned int base_address, unsigned int limit_of
     temp->limit_offeset = limit_offset;
     sort_by_base_address(temp);
   }
-  else
-  {
-    return;
-  }
+}
+void printlist(struct node *head){
+    struct node* temp = head;
+    while(temp != NULL){
+        printf("%x %x -> ", temp->base_address, temp->limit_offeset);
+        temp = temp->next;
+    }
+    printf("NULL");
+    printf("\n");
 }
