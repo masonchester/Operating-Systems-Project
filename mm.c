@@ -90,17 +90,14 @@ void add(struct node **head, unsigned int base_address, unsigned int limit_offse
   {
     if (current->next != NULL)
     {
-      new_node->next = current->next;
-      current->next = new_node;
+
       current->next->prev = new_node;
-      new_node->prev = current;
     }
-    else
-    {
-      new_node->next = current->next;
-      current->next = new_node;
-      new_node->prev = current;
-    }
+
+    new_node->next = current->next;
+    current->next = new_node;
+    new_node->prev = current;
+
     new_node->base_address = current->base_address;
     new_node->limit_offeset = current->limit_offeset;
     current->base_address = base_address;
@@ -172,31 +169,4 @@ void resize(struct node **head, unsigned int base_address, unsigned int limit_of
   {
     return;
   }
-}
-
-void printList(struct node *head)
-{
-  struct node *temp = head;
-  while (temp != NULL)
-  {
-    printf("%x %x -> ", temp->base_address, temp->limit_offeset);
-    temp = temp->next;
-  }
-  printf("\n");
-}
-
-int main()
-{
-  struct node *head = NULL;
-  add(&head, 0x1000, 0x400);
-  add(&head, 0x400, 0x400);
-  add(&head, 0x3000, 0x400);
-  add(&head, 0x100, 0x1200);
-
-  printList(head);
-
-  resize(&head, 0x400, 0x1200);
-  printList(head);
-
-  return 0;
 }
