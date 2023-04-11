@@ -45,30 +45,6 @@ void sort_by_base_address(struct node *list)
   }
 }
 
-// sorts the list by the limit offset by increasing order
-void sort_by_limit_address(struct node *list)
-{
-  struct node *current = list;
-  while (current != NULL)
-  {
-    struct node *current_next = current->next;
-    while (current_next != NULL)
-    {
-      if (current_next->limit_offeset < current->limit_offeset)
-      {
-        unsigned int temp_base = current->base_address;
-        unsigned int temp_limit = current->limit_offeset;
-        current->base_address = current_next->base_address;
-        current->limit_offeset = current_next->limit_offeset;
-        current_next->base_address = temp_base;
-        current_next->limit_offeset = temp_limit;
-      }
-      current_next = current_next->next;
-    }
-    current = current->next;
-  }
-}
-
 // add a node in its sorted position
 void add(struct node **head, unsigned int base_address, unsigned int limit_offset)
 {
