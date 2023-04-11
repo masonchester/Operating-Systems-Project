@@ -141,12 +141,3 @@ void resize(struct node **head, unsigned int base_address, unsigned int limit_of
     sort_by_base_address(temp);
   }
 }
-void print_list(struct node *head){
-    struct node* temp = head;
-    while(temp != NULL){
-        printf("%x %x -> ", temp->base_address, temp->limit_offeset);
-        temp = temp->next;
-    }
-    printf("NULL");
-    printf("\n");
-}
