@@ -77,8 +77,6 @@ void add(struct node **head, unsigned int base_address, unsigned int limit_offse
     new_node->limit_offeset = current->limit_offeset;
     current->base_address = base_address;
     current->limit_offeset = limit_offset;
-<<<<<<< HEAD
-=======
   }
   else
   {
@@ -98,7 +96,7 @@ void add(struct node **head, unsigned int base_address, unsigned int limit_offse
     new_node->next = current->next;
     current->next = new_node;
     new_node->prev = current;
->>>>>>> MikesBranch
+    new_node->prev = current;
   }
   else
   {
@@ -107,8 +105,6 @@ void add(struct node **head, unsigned int base_address, unsigned int limit_offse
     {
       current = current->next;
     }
-
-<<<<<<< HEAD
     // if the current address -> next is null than you are the last node
     if (current->next != NULL)
     {
@@ -162,7 +158,7 @@ void resize(struct node **head, unsigned int base_address, unsigned int limit_of
     temp->limit_offeset = limit_offset;
     sort_by_base_address(temp);
   }
-=======
+
 void delete_by_address(struct node **head, unsigned int delete_address)
 {
   struct node *current = *head;
@@ -255,7 +251,7 @@ void create_holes_list(struct node **holes_list,struct node **memoryList,unsigne
 }
 //delete_hole_list is used to free the holes list so we can generate a new one. This way we do not have to maintain the holes list
 //we can just scan the entire list and generate the holes.
-void delete_hole_list(node **head)
+void delete_hole_list(struct node **head)
 {
   node *current = *head;
   node *next_node;
@@ -267,18 +263,7 @@ void delete_hole_list(node **head)
   }
   *head = NULL;
 }
-void print_hole_list(node* the_list)
-{
-  node* current = the_list;
-  while(current != NULL)
-  {
-    printf("%d", current->base_address);
-    printf(" ");
-    printf("%d",current->limit_offeset);
-    printf(" ");
-    current = current->next;
-  }
-}
+
 void mm_add(node **memory_list, node **holes_list,unsigned int base_address, unsigned int limit_offset, unsigned int min, unsigned int max)
 {
   add(memory_list,base_address,limit_offset);
@@ -297,6 +282,19 @@ void mm_delete(node **memory_list, node **holes_list,unsigned int base_address, 
     delete_hole_list(holes_list);
   }
   create_holes_list(holes_list,memory_list,min,max);
->>>>>>> MikesBranch
+    // if the current address -> next is null than you are the last node
 }
+
+//resize a nodes limit offset, node is found by the base address.
+void resize(struct node **memory_list, struct node **holes_list, unsigned int base_address, unsigned int limit_offset, unsigned int min, unsigned int max){
+	resize(memory_list, base_address, limit_offset);	
+	if(holes_list != null){
+		delete_holes_list(holes_list);
+	}
+	create_holes_list(holes_list, holes_list,min, max);
+}
+
+
+
+
 
