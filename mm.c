@@ -77,6 +77,7 @@ void add(struct node **head, unsigned int base_address, unsigned int limit_offse
     new_node->limit_offeset = current->limit_offeset;
     current->base_address = base_address;
     current->limit_offeset = limit_offset;
+
   }
   else
   {
@@ -95,9 +96,15 @@ void add(struct node **head, unsigned int base_address, unsigned int limit_offse
     // link current node and new node
     new_node->next = current->next;
     current->next = new_node;
-    new_node->prev = current;
+    new_node->prev = curre
   }
-}
+  else
+  {
+    // search the list until you find a base address current base address smaller than the new nodes
+    while (current->next != NULL && current->next->base_address < base_address)
+    {
+      current = current->next;
+    }
 
 void delete_by_address(struct node **head, unsigned int delete_address)
 {
@@ -233,5 +240,58 @@ void mm_delete(node **memory_list, node **holes_list,unsigned int base_address, 
     delete_hole_list(holes_list);
   }
   create_holes_list(holes_list,memory_list,min,max);
+    // if the current address -> next is null than you are the last node
+    if (current->next != NULL)
+    {
+      current->next->prev = new_node;
+    }
+
+    // link current node and new node
+    new_node->next = current->next;
+    current->next = new_node;
+    new_node->prev = current;
+  }
+}
+
+void delete_by_address(struct node **head, unsigned int delete_address)
+{
+  struct node *current = *head;
+
+  while (current != NULL && current->base_address != delete_address)
+  {
+    current = current->next;
+  }
+
+  // If the node is the head delete the head
+  if (current->prev == NULL)
+  {
+    *head = current->next;
+    return;
+  }
+  // If the node is the tail then delete it
+  else if (current->next == NULL)
+  {
+    current->prev->next = NULL;
+  }
+  else // if the node is not a head or a tail then it must be in the middle of two nodes
+  {
+    current->prev->next = current->next;
+    current->next->prev = current->prev;
+  }
+  free(current); // deallocate current
+}
+
+void resize(struct node **head, unsigned int base_address, unsigned int limit_offset)
+{
+  struct node *temp = *head;
+  while (temp->next != NULL && temp->base_address != base_address)
+  {
+    temp = temp->next;
+  }
+  if (temp->next != NULL)
+  {
+    temp->limit_offeset = limit_offset;
+    sort_by_base_address(temp);
+  }
 }
 
