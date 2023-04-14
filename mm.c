@@ -291,26 +291,3 @@ void print_memory(struct node* memory_list,struct node* hole_list,unsigned int m
   printf("%x", max);
   printf("\n");
 }
-
-
-
-
-void main()
-{
-	struct node* memory_list = NULL;
-	struct node* holes_list = NULL;
-
-	mm_add(&memory_list, &holes_list, 0x10000, 0x400, 0x10000, 0x40000);
-	mm_add(&memory_list, &holes_list, 0x11000, 0x1000, 0x10000, 0x40000);
-	mm_add(&memory_list, &holes_list, 0x20000, 0x400, 0x10000, 0x40000);
-
-	printlist(memory_list);
-	printlist(holes_list);
-
-	print_memory(memory_list, holes_list, 0x10000, 0x40000);	
-}
-
-
-
-
-
