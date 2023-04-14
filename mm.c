@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct node
 {
   unsigned int base_address;
@@ -131,11 +130,11 @@ void delete_by_address(struct node **head, unsigned int delete_address)
 void resize(struct node **head, unsigned int base_address, unsigned int limit_offset)
 {
   struct node *temp = *head;
-  while (temp->next != NULL && temp->base_address != base_address)
+  while (temp != NULL && temp->base_address != base_address)
   {
     temp = temp->next;
   }
-  if (temp->next != NULL)
+  if (temp != NULL)
   {
     temp->limit_offeset = limit_offset;
     sort_by_base_address(temp);
@@ -216,44 +215,23 @@ void print_hole_list(node* the_list)
     current = current->next;
   }
 }
-
-
-void main()
+void mm_add(node **memory_list, node **holes_list,unsigned int base_address, unsigned int limit_offset, unsigned int min, unsigned int max)
 {
-  struct node *head = NULL;
-  struct node *hole_list = NULL;
-create_holes_list(&hole_list,&head,0,1024);
- printf("holes ");
- print_hole_list(hole_list);
-printf("\n");
-
-add(&head,0, 200);
- printf("Memory ");
- print_hole_list(head);
- printf("\n");
- create_holes_list(&hole_list,&head,0,1024);
- printf("holes ");
- print_hole_list(hole_list);
- printf("\n");
-delete_hole_list(&hole_list);
-
- add(&head,300, 401);
- printf("Memory ");
- print_hole_list(head);
- printf("\n");
- create_holes_list(&hole_list,&head,0,1024);
- printf("hole_list ");
- print_hole_list(hole_list);
- printf("\n");
- delete_hole_list(&hole_list);
-
-
-printf("Memory ");
- add(&head,800, 1000);
- print_hole_list(head);
- printf("\n");
- printf("Hole_list ");
- create_holes_list(&hole_list,&head,0,1024);
- print_hole_list(hole_list);
-
+  add(memory_list,base_address,limit_offset);
+  if(holes_list != NULL)
+  {
+    delete_hole_list(holes_list);
+  }
+  create_holes_list(holes_list,memory_list,min,max);
 }
+
+void mm_delete(node **memory_list, node **holes_list,unsigned int base_address, unsigned int limit_offset, unsigned int min, unsigned int max)
+{
+  delete_by_address(memory_list,base_address);
+   if(holes_list != NULL)
+  {
+    delete_hole_list(holes_list);
+  }
+  create_holes_list(holes_list,memory_list,min,max);
+}
+
