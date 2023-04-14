@@ -141,45 +141,57 @@ void resize(struct node **head, unsigned int base_address, unsigned int limit_of
     sort_by_base_address(temp);
   }
 }
-
+//Method to create holes list. It scans the memory list and creates a new linked list to represent the holes.
 void create_holes_list(struct node **holes_list,struct node **memoryList,unsigned int base_address, unsigned int limit_offset)
 {
+  //We create a pointer for both the holes list pointer and the memory list pointer.
   struct node *temp_memory = *memoryList;
   struct node *temp_hole = *holes_list;
+  //If there is nothing in memory then we just set the hole list to the total size of the memory.
   if(temp_memory == NULL)
   {
     add(holes_list,base_address,limit_offset);
     return;
   }
+  //if there is only one thing in memory then we can just adjust the holes list.
   else if(temp_memory->next == NULL)
   {
+    //if the holes list is null then we just create a new node based on limit offset of the memory list and the limit offset of the total memory.
     if(temp_hole == NULL)
     {
       add(holes_list,temp_memory->limit_offeset+1,limit_offset);
     }
     else
     {
+      //otherwise we just adjust the cell.
     temp_hole->base_address = temp_memory->limit_offeset + 1;
     temp_hole->limit_offeset = limit_offset;
     }
     return;
   }
+  //If the memory is not null then we need to check if it has more than one thing in memory.
   else if(temp_memory != NULL)
   {
     while(temp_memory->next != NULL)
     {
+      //if the next is not null then we need to start populating the holes list.
+      //if the base address + limit offset + 1 < the next base address -1 then we have a hole inbetween two spots in memory.
       if(temp_memory->base_address + temp_memory->limit_offeset + 1 < temp_memory->next->base_address-1)
       {
         add(holes_list,(temp_memory->limit_offeset + 1),temp_memory->next->base_address-1);
       }
+      //otherwise we just continue looking.
       temp_memory = temp_memory->next;
     }
+    //we have to check the last element in memory. If it is not null then we need to account for that in the holes list.
     if(temp_memory != NULL)
     {
       add(holes_list,temp_memory->limit_offeset +1, limit_offset);
     }
   }
 }
+//delete_hole_list is used to free the holes list so we can generate a new one. This way we do not have to maintain the holes list
+//we can just scan the entire list and generate the holes.
 void delete_hole_list(node **head)
 {
   node *current = *head;
@@ -244,9 +256,4 @@ printf("Memory ");
  create_holes_list(&hole_list,&head,0,1024);
  print_hole_list(hole_list);
 
-  //delete_hole_list(&hole_list);
-  //add(&head, 201, 300);
-  //create_holes_list(&hole_list,&head,0,0x400);
-  //print_hole_list(&hole_list);
-  
 }
