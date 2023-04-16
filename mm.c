@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "mm.h"
 
-typedef struct node
-{
-  unsigned int base_address;
-  unsigned int limit_offset;
-
-  struct node *next;
-  struct node *prev;
-} node;
 
 // searchs for the node which contains the current base address
 struct node *node_find(struct node *list, int search_address)
@@ -22,7 +15,7 @@ struct node *node_find(struct node *list, int search_address)
 }
 
 // sorts the list by the base address in increasing order
-void sort_by_base_address(struct node *list)
+void  sort_by_base_address(struct node *list)
 {
   struct node *current = list;
   while (current != NULL)
@@ -259,35 +252,20 @@ void print_memory(struct node* memory_list,struct node* hole_list,unsigned int m
   
   while(current_hole != NULL)
   {
-    total_free += current_hole->base_address + current_hole->limit_offset;
+    total_free += current_hole->limit_offset;
     current_hole = current_hole->next;
     hole_gap++;
   }
   while(current_mem != NULL)
   {
-    total_allocated +=  current_mem->limit_offset + current_mem->base_address;
     current_mem = current_mem->next;
     mem_gap++;
   }
-   printf("Total Physical Memory: ");
-  printf("%x", max);
-  printf("\n");
-  printf("Total Free: ");
-  printf("%x", total_free);
-  printf("\n");
-  printf("Total Allocated: ");
-  printf("%x", total_allocated);
-  printf("\n");
-  printf("Number of allocations: ");
-  printf("%x", mem_gap);
-  printf("\n");
-  printf("Number of free gaps: ");
-  printf("%x", hole_gap);
-  printf("\n");
-  printf("Start of Memory: ");
-  printf("%x", min);
-  printf("\n");
-  printf("End of Memory: ");
-  printf("%x", max);
-  printf("\n");
+  printf("Total Physical Memory: %dkb\n", (max - min) / 1024);
+  printf("Total Free: %dkb\n", total_free / 1024 );
+  printf("Total Allocated: %dkb\n", ((max - min) - (total_free)) / 1024);
+  printf("Number of allocations: %d\n",mem_gap);
+  printf("Number of free gaps: %d\n", hole_gap);
+  printf("Start of Memory: %x \n", min);
+  printf("End of Memory: %x \n", max);
 }
